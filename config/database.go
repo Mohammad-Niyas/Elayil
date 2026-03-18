@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"kerala-food-finder/models"
 	"log"
 	"os"
 
@@ -27,6 +26,7 @@ func ConnectDatabase() {
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_NAME"),
 	)
+
 	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
@@ -34,17 +34,4 @@ func ConnectDatabase() {
 
 	DB = database
 	log.Println("Database connected successfully!")
-
-	err = DB.AutoMigrate(
-		&models.Restaurant{},
-		&models.Dish{},
-		&models.Reel{},
-		&models.Review{},
-		&models.Save{},
-	)
-	if err != nil {
-		log.Fatal("Migration failed:", err)
-	}
-
-	log.Println("Database migrated successfully!")
 }

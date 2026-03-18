@@ -1,11 +1,14 @@
 package main
 
 import (
-	"kerala-food-finder/config"
 	"log"
 	"os"
-	"github.com/joho/godotenv"
+
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+	"kerala-food-finder/config"
+	"kerala-food-finder/models"
+	"kerala-food-finder/routes"
 )
 
 func main() {
@@ -16,10 +19,23 @@ func main() {
 
 	config.ConnectDatabase()
 
-	router:=gin.Default()
+	// AutoMigrate here!
+	config.DB.AutoMigrate(
+		&models.Restaurant{},
+		&models.Dish{},
+		&models.Reel{},
+		&models.Review{},
+		&models.Save{},
+	)
 
-	port:=os.Getenv("PORT")
+	router := gin.Default()
+	routes.SetupRoutes(router)
 
-	log.Println("Server running on port:", port)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Println("Server starting on port:", port)
 	router.Run(":" + port)
 }

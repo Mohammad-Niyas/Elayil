@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-const API_BASE = "http://localhost:8081/api";
+const API_BASE = "https://kerala-food-finder-production.up.railway.app/api";
 
 const CITIES = ["All Kerala","Kochi","Kozhikode","Kannur","Alappuzha","Thrissur","Thiruvananthapuram","Palakkad"];
 const CITY_EMOJI = { Kochi:"⚓",Kozhikode:"🌊",Kannur:"🏖️",Alappuzha:"🚣",Thrissur:"🎭",Thiruvananthapuram:"🏛️",Palakkad:"🏰" };

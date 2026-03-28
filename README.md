@@ -1,7 +1,5 @@
 # 🍛 Kerala Food Finder (MVP)
 
-![Kerala Food Finder Banner](file:///C:/Users/mohammad%20niyas/.gemini/antigravity/brain/077d224a-dc4f-4dde-9381-962090f3a756/kerala_food_finder_banner_1774704630329.png)
-
 > **"Discovering Kerala's culinary soul through the power of multi-modal AI."**
 
 Kerala Food Finder is an advanced AI-powered discovery platform that bridges the gap between viral social media reels and your next favorite meal. By leveraging state-of-the-art **Speech-to-Text** and **Large Language Models**, we transform unstructured food content into structured, searchable dining insights across Kerala.

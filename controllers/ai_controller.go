@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -129,7 +130,7 @@ func fetchCaptionWithRapidAPI(reelLink string) (string, error) {
 		return "", fmt.Errorf("RapidAPI credentials are not set")
 	}
 
-	url := "https://" + apiHost + "/get_ig_reel_info_v2.php"
+	url := "https://" + apiHost + "/get_ig_post_info_v2.php"
 
 	payload := strings.NewReader("username_or_url=" + reelLink)
 
@@ -145,18 +146,20 @@ func fetchCaptionWithRapidAPI(reelLink string) (string, error) {
 	}
 	defer res.Body.Close()
 
+	bodyBytes, _ := io.ReadAll(res.Body)
+	fmt.Println("RapidAPI Raw Response:", string(bodyBytes))
+
 	if res.StatusCode != 200 {
-		return "", fmt.Errorf("RapidAPI error: status %d", res.StatusCode)
+		return "", fmt.Errorf("RapidAPI error: status %d | body: %s", res.StatusCode, string(bodyBytes))
 	}
 
 	var result map[string]interface{}
-	json.NewDecoder(res.Body).Decode(&result)
+	json.Unmarshal(bodyBytes, &result)
 
-	// API usually returns data in a "data" or "media" field or directly
-	// For this specific API (Stable Scraper), it's often in "caption" or "text" or "data.caption"
-	// We'll peek into the response
+	// API usually returns data in a "data" field
 	data, ok := result["data"].(map[string]interface{})
 	if ok {
+		// New check for caption_text or text
 		if caption, ok := data["caption_text"].(string); ok {
 			return caption, nil
 		}

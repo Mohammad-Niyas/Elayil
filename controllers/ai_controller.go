@@ -175,6 +175,8 @@ func fetchCaption(reelLink string) (string, error) {
 		"--skip-download",
 		"--print", "description",
 		"--no-playlist",
+		"--no-check-certificates",
+		"--geo-bypass",
 		"--user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
 		reelLink,
 	)
@@ -186,23 +188,32 @@ func fetchCaption(reelLink string) (string, error) {
 
 	err := cmd.Run()
 	if err != nil {
+		fmt.Printf("yt-dlp (description) error for %s: %v | stderr: %s\n", reelLink, err, stderr.String())
 		// Try title if description empty
 		cmd2 := exec.Command(
 			"python", "-m", "yt_dlp",
 			"--skip-download",
 			"--print", "title",
 			"--no-playlist",
+			"--no-check-certificates",
+			"--geo-bypass",
 			"--user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
 			reelLink,
 		)
 		var stdout2 bytes.Buffer
+		var stderr2 bytes.Buffer
 		cmd2.Stdout = &stdout2
-		cmd2.Run()
+		cmd2.Stderr = &stderr2
+		err2 := cmd2.Run()
+		if err2 != nil {
+			fmt.Printf("yt-dlp (title) error for %s: %v | stderr: %s\n", reelLink, err2, stderr2.String())
+		}
 		return stdout2.String(), nil
 	}
 
 	caption := stdout.String()
 	if strings.TrimSpace(caption) == "" {
+		fmt.Printf("yt-dlp returned empty caption for %s\n", reelLink)
 		return "", nil
 	}
 

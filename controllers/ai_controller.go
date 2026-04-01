@@ -160,7 +160,20 @@ func fetchCaptionWithRapidAPI(reelLink string) (string, error) {
 	var result map[string]interface{}
 	json.Unmarshal(bodyBytes, &result)
 
-	// The API returns data in "data" -> "caption_text"
+	// 1. Try "edge_media_to_caption" -> "edges" -> [0] -> "node" -> "text" (Standard Instagram API format)
+	if edge, ok := result["edge_media_to_caption"].(map[string]interface{}); ok {
+		if edges, ok := edge["edges"].([]interface{}); ok && len(edges) > 0 {
+			if firstEdge, ok := edges[0].(map[string]interface{}); ok {
+				if node, ok := firstEdge["node"].(map[string]interface{}); ok {
+					if text, ok := node["text"].(string); ok {
+						return text, nil
+					}
+				}
+			}
+		}
+	}
+
+	// 2. Try "data" -> "caption_text" (Common in Scraper APIs)
 	data, ok := result["data"].(map[string]interface{})
 	if ok {
 		if caption, ok := data["caption_text"].(string); ok {
@@ -174,6 +187,14 @@ func fetchCaptionWithRapidAPI(reelLink string) (string, error) {
 		}
 	}
 	
+	// 3. Last fallback (root level)
+	if caption, ok := result["text"].(string); ok {
+		return caption, nil
+	}
+	if caption, ok := result["caption"].(string); ok {
+		return caption, nil
+	}
+
 	return "", fmt.Errorf("could not find caption in API response")
 }
 

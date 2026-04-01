@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"os/exec"
 	"strings"
 
 	"kerala-food-finder/config"
@@ -122,6 +121,58 @@ Rules:
 	return &extracted, nil
 }
 
+func fetchCaptionWithRapidAPI(reelLink string) (string, error) {
+	apiKey := os.Getenv("RAPID_API_KEY")
+	apiHost := os.Getenv("RAPID_API_HOST")
+
+	if apiKey == "" || apiHost == "" {
+		return "", fmt.Errorf("RapidAPI credentials are not set")
+	}
+
+	url := "https://" + apiHost + "/get_ig_reel_info_v2.php"
+
+	payload := strings.NewReader("username_or_url=" + reelLink)
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/x-www-form-urlencoded")
+	req.Header.Add("x-rapidapi-key", apiKey)
+	req.Header.Add("x-rapidapi-host", apiHost)
+
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != 200 {
+		return "", fmt.Errorf("RapidAPI error: status %d", res.StatusCode)
+	}
+
+	var result map[string]interface{}
+	json.NewDecoder(res.Body).Decode(&result)
+
+	// API usually returns data in a "data" or "media" field or directly
+	// For this specific API (Stable Scraper), it's often in "caption" or "text" or "data.caption"
+	// We'll peek into the response
+	data, ok := result["data"].(map[string]interface{})
+	if ok {
+		if caption, ok := data["caption_text"].(string); ok {
+			return caption, nil
+		}
+		if caption, ok := data["caption"].(string); ok {
+			return caption, nil
+		}
+	}
+	
+	// Fallback for some other formats
+	if caption, ok := result["caption"].(string); ok {
+		return caption, nil
+	}
+
+	return "", fmt.Errorf("could not find caption in API response")
+}
+
 func ExtractFromReel(c *gin.Context) {
 	var input ReelExtractInput
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -138,9 +189,10 @@ func ExtractFromReel(c *gin.Context) {
 		return
 	}
 
-	// Fetch caption from reel
-	caption, err := fetchCaption(input.ReelLink)
-	if err != nil || strings.TrimSpace(caption) == "" {
+	// Fetch caption using RapidAPI (Professional & Legal)
+	caption, err := fetchCaptionWithRapidAPI(input.ReelLink)
+	if err != nil {
+		fmt.Println("RapidAPI Error:", err)
 		c.JSON(http.StatusOK, gin.H{
 			"data": ExtractedData{
 				Restaurant: "",
@@ -148,7 +200,7 @@ func ExtractFromReel(c *gin.Context) {
 				Area:       "",
 				Dishes:     []string{},
 			},
-			"message": "No caption found in reel",
+			"message": "Could not fetch reel data from API",
 		})
 		return
 	}
@@ -167,57 +219,6 @@ func ExtractFromReel(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"data": extracted,
 	})
-}
-
-func fetchCaption(reelLink string) (string, error) {
-	cmd := exec.Command(
-		"python", "-m", "yt_dlp",
-		"--skip-download",
-		"--print", "description",
-		"--no-playlist",
-		"--no-check-certificates",
-		"--geo-bypass",
-		"--user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-		reelLink,
-	)
-
-	var stdout bytes.Buffer
-	var stderr bytes.Buffer
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-
-	err := cmd.Run()
-	if err != nil {
-		fmt.Printf("yt-dlp (description) error for %s: %v | stderr: %s\n", reelLink, err, stderr.String())
-		// Try title if description empty
-		cmd2 := exec.Command(
-			"python", "-m", "yt_dlp",
-			"--skip-download",
-			"--print", "title",
-			"--no-playlist",
-			"--no-check-certificates",
-			"--geo-bypass",
-			"--user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-			reelLink,
-		)
-		var stdout2 bytes.Buffer
-		var stderr2 bytes.Buffer
-		cmd2.Stdout = &stdout2
-		cmd2.Stderr = &stderr2
-		err2 := cmd2.Run()
-		if err2 != nil {
-			fmt.Printf("yt-dlp (title) error for %s: %v | stderr: %s\n", reelLink, err2, stderr2.String())
-		}
-		return stdout2.String(), nil
-	}
-
-	caption := stdout.String()
-	if strings.TrimSpace(caption) == "" {
-		fmt.Printf("yt-dlp returned empty caption for %s\n", reelLink)
-		return "", nil
-	}
-
-	return caption, nil
 }
 
 // SaveExtractedDishes — save selected dishes

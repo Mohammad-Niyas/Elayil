@@ -1,8 +1,8 @@
-# 🍛 Kerala Food Finder
+# 🍛 ELAYIL
 
 > **"Discovering Kerala's culinary soul through the power of multi-modal AI."**
 
-Kerala Food Finder is an advanced AI-powered discovery platform that bridges the gap between viral social media reels and your next favorite meal. By leveraging state-of-the-art **Instagram Scraper APIs** and **LLM inference**, we transform unstructured food content into structured, searchable dining insights across Kerala.
+ELAYIL is an advanced AI-powered discovery platform that bridges the gap between viral social media reels and your next favorite meal. By leveraging state-of-the-art **Instagram Scraper APIs** and **LLM inference**, we transform unstructured food content into structured, searchable dining insights across Kerala.
 
 ---
 
@@ -57,7 +57,7 @@ The platform features a professional-grade AI pipeline to ensure the highest acc
 ## 📦 Project Structure
 
 ```text
-Kerala-Food-Finder/
+ELAYIL/
 ├── cmd/                # Backend entry point (main.go)
 ├── controllers/        # Business Logic (RapidAPI & Groq Integration)
 ├── models/             # Schema definitions (GORM Entities)
@@ -91,7 +91,7 @@ We are currently in the **MVP+ phase**. Based on our latest architecture revisio
 ### Quick Start
 1.  **Clone the Repo**:
     ```bash
-    git clone https://github.com/mohammad-niyas/Kerala-Food-Finder.git
+    git clone https://github.com/Mohammad-Niyas/Kerala-Food-Finder.git
     cd Kerala-Food-Finder
     ```
 2.  **Environment Setup**:
@@ -114,4 +114,7 @@ We are currently in the **MVP+ phase**. Based on our latest architecture revisio
 
 ---
 
-### Developed with ❤️ by [Mohammad Niyas](https://github.com/mohammad-niyas)
+### Developed with ❤️ by [Mohammad Niyas](https://github.com/Mohammad-Niyas)
+rontend && npm run dev`
+
+---

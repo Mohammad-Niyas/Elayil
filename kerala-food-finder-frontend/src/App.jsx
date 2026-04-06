@@ -448,7 +448,7 @@ api.get(`/restaurants/${restaurant.ID || restaurant.id}/reels`),
                 <div style={{ width: 60, height: 60, background: `linear-gradient(135deg,${GOLD},${GOLD_DARK})`, borderRadius: 18, display: "flex", alignItems: "center", justifyContent: "center", color: "#1C1408", marginBottom: 20, boxShadow: `0 8px 28px ${GOLD}55`, animation: "glow 2s ease infinite" }}>
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 </div>
-                <p style={{ color: T.accent, fontSize: 11, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", margin: "0 0 8px" }}>Kerala Food Finder</p>
+                <p style={{ color: T.accent, fontSize: 11, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", margin: "0 0 8px" }}>ELAYIL</p>
                 <h1 style={{ fontFamily: "'Fraunces',serif", color: T.text, fontSize: 38, fontWeight: 800, margin: "0 0 10px", lineHeight: 1.05, letterSpacing: -1 }}>Save dishes.<br />Find them<br /><em style={{ color: T.accent }}>when you travel.</em></h1>
                 <p style={{ color: T.text2, fontSize: 15, margin: "0 0 36px", lineHeight: 1.7 }}>Paste any food reel — our system extracts the dishes.<br />The app reminds you when you're nearby.</p>
                 {[
@@ -480,7 +480,7 @@ api.get(`/restaurants/${restaurant.ID || restaurant.id}/reels`),
                       <div style={{ width: 22, height: 22, background: `linear-gradient(135deg,${GOLD},${GOLD_DARK})`, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", color: "#1C1408" }}>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                       </div>
-                      <p style={{ color: T.accent, fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", margin: 0 }}>Kerala Food Finder</p>
+                      <p style={{ color: T.accent, fontSize: 11, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", margin: 0 }}>ELAYIL</p>
                     </div>
                     <h1 style={{ fontFamily: "'Fraunces',serif", color: T.text, fontSize: 24, fontWeight: 800, margin: 0, lineHeight: 1.15, letterSpacing: -.4 }}>Discover the best<br />local spots</h1>
                   </div>
@@ -715,7 +715,7 @@ api.get(`/restaurants/${restaurant.ID || restaurant.id}/reels`),
                 ))}
               </div>
               <div style={{ background: T.accentBg, borderRadius: 15, padding: 15, border: `1px solid ${T.accentBorder}`, marginBottom: 16 }}>
-                <p style={{ color: T.text, fontSize: 13, fontWeight: 700, margin: "0 0 4px" }}>Kerala Food Finder</p>
+                <p style={{ color: T.text, fontSize: 13, fontWeight: 700, margin: "0 0 4px" }}>ELAYIL</p>
                 <p style={{ color: T.text2, fontSize: 12, lineHeight: 1.6, margin: "0 0 8px" }}>Save dishes from reels. Get notified when you are near saved culinary spots.</p>
                 <p style={{ color: T.text3, fontSize: 11, margin: 0 }}>Version 1.0 · Systems Active</p>
               </div>

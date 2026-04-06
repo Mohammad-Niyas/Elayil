@@ -106,7 +106,7 @@ const Tag = ({ text, color }) => (
   </span>
 );
 
-const RatingBar = ({ label, value, color = GOLD }) => (
+const RatingBar = ({ label, value, color = LEAF_MAIN }) => (
   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 9 }}>
     <span style={{ color: T.text2, fontSize: 12, width: 90, flexShrink: 0, fontWeight: 500 }}>{label}</span>
     <div style={{ flex: 1, background: T.surface2, borderRadius: 99, height: 5, overflow: "hidden" }}>
@@ -422,15 +422,15 @@ api.get(`/restaurants/${restaurant.ID || restaurant.id}/reels`),
         @keyframes scaleIn{from{transform:scale(.93);opacity:0}to{transform:scale(1);opacity:1}}
         @keyframes toast{0%{opacity:0;transform:translateX(-50%) translateY(10px)}12%{opacity:1;transform:translateX(-50%) translateY(0)}88%{opacity:1}100%{opacity:0}}
         @keyframes spin{to{transform:rotate(360deg)}}
-        @keyframes glow{0%,100%{box-shadow:0 0 0 0 ${GOLD}44}50%{box-shadow:0 0 0 8px ${GOLD}00}}
+        @keyframes glow{0%,100%{box-shadow:0 0 0 0 ${LEAF_MAIN}44}50%{box-shadow:0 0 0 8px ${LEAF_MAIN}00}}
         button:hover{opacity:.87!important}button:active{transform:scale(.95)!important}
-        input:focus,textarea:focus{border-color:${GOLD}!important;outline:none}
+        input:focus,textarea:focus{border-color:${LEAF_MAIN}!important;outline:none}
         input::placeholder,textarea::placeholder{color:"#C0A060"}
         ::-webkit-scrollbar{width:0}*{box-sizing:border-box}textarea{resize:none}
       `}</style>
 
       {/* Phone Shell */}
-      <div style={{ width: 390, height: 820, background: T.bg, borderRadius: 48, overflow: "hidden", boxShadow: `0 40px 100px rgba(180,83,9,.2),0 0 0 1px ${GOLD}30`, position: "relative", display: "flex", flexDirection: "column", transition: "all .3s" }}>
+      <div style={{ width: 390, height: 820, background: T.bg, borderRadius: 48, overflow: "hidden", boxShadow: `0 40px 100px rgba(180,83,9,.2),0 0 0 1px ${LEAF_MAIN}30`, position: "relative", display: "flex", flexDirection: "column", transition: "all .3s" }}>
 
         {/* Status Bar */}
         <div style={{ background: T.bg, padding: "14px 26px 4px", display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
@@ -543,7 +543,7 @@ api.get(`/restaurants/${restaurant.ID || restaurant.id}/reels`),
                     <div style={{ display: "flex", gap: 7 }}>
                       {["Kozhikode", "Kochi", "Kannur"].map(c => (
                         <button key={c} onClick={() => setCity(c)}
-                          style={{ background: `${GOLD}18`, border: `1px solid ${GOLD}30`, borderRadius: 10, padding: "6px 11px", color: T.accent, fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
+                          style={{ background: `${LEAF_MAIN}18`, border: `1px solid ${LEAF_MAIN}30`, borderRadius: 10, padding: "6px 11px", color: T.accent, fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
                           {c}
                         </button>
                       ))}
@@ -636,7 +636,7 @@ api.get(`/restaurants/${restaurant.ID || restaurant.id}/reels`),
                 return (
                   <div key={d.id || d.ID} onClick={() => openDish(d)}
                     style={{ background: T.surface, borderRadius: 16, padding: "13px 15px", marginBottom: 9, border: `1px solid ${T.border}`, display: "flex", alignItems: "center", gap: 13, cursor: "pointer", animation: `slideUp .32s ease forwards`, animationDelay: `${i * .06}s`, opacity: 0, boxShadow: T.shadow }}>
-                    <div style={{ width: 32, height: 32, background: `linear-gradient(135deg,${GOLD},${GOLD_DARK})`, borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "#1C1408", flexShrink: 0 }}>#{i + 1}</div>
+                    <div style={{ width: 32, height: 32, background: `linear-gradient(135deg,${LEAF_MAIN},${LEAF_MAIN_DARK})`, borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "#1C1408", flexShrink: 0 }}>#{i + 1}</div>
                     <div style={{ flex: 1 }}>
                       <p style={{ color: T.text, fontSize: 14, fontWeight: 700, margin: "0 0 2px", fontFamily: "'Fraunces',serif" }}>{d.Name || d.name}</p>
                       <p style={{ color: T.text2, fontSize: 12, margin: 0 }}>{restaurant?.Name || restaurant?.name} · {restaurant?.City || restaurant?.city}</p>
@@ -763,7 +763,7 @@ api.get(`/restaurants/${restaurant.ID || restaurant.id}/reels`),
                     {restReels.map(reel => (
                       <a key={reel.ID || reel.id} href={reel.ReelLink || reel.reel_link} target="_blank" rel="noopener noreferrer" 
                         style={{ background: `linear-gradient(135deg, ${T.accentBg}, ${T.surface})`, borderRadius: 16, padding: "14px 16px", marginBottom: 12, border: `1px solid ${T.accentBorder}`, display: "flex", alignItems: "center", gap: 14, textDecoration: "none", boxShadow: T.shadow, cursor: "pointer" }}>
-                        <div style={{ width: 44, height: 44, borderRadius: 14, background: `linear-gradient(135deg, ${GOLD}, ${GOLD_DARK})`, display: "flex", alignItems: "center", justifyContent: "center", color: "#1C1408", flexShrink: 0, boxShadow: `0 4px 12px ${GOLD}66` }}>
+                        <div style={{ width: 44, height: 44, borderRadius: 14, background: `linear-gradient(135deg, ${LEAF_MAIN}, ${LEAF_MAIN_DARK})`, display: "flex", alignItems: "center", justifyContent: "center", color: "#1C1408", flexShrink: 0, boxShadow: `0 4px 12px ${LEAF_MAIN}66` }}>
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         </div>
                         <div style={{ flex: 1, minWidth: 0 }}>
@@ -826,7 +826,7 @@ api.get(`/restaurants/${restaurant.ID || restaurant.id}/reels`),
                   {avg && (
                     <div style={{ background: T.surface, borderRadius: 14, padding: "13px", marginBottom: 13, border: `1px solid ${T.border}`, boxShadow: T.shadow }}>
                       <p style={{ color: T.text3, fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", margin: "0 0 11px" }}>Rating Breakdown</p>
-                      <RatingBar label="Taste" value={avgAspect("taste")} color={GOLD} />
+                      <RatingBar label="Taste" value={avgAspect("taste")} color={LEAF_MAIN} />
                       <RatingBar label="Value" value={avgAspect("value")} color={GREEN} />
                       <RatingBar label="Ambience" value={avgAspect("ambience")} color="#7C3AED" />
                     </div>
@@ -982,7 +982,7 @@ api.get(`/restaurants/${restaurant.ID || restaurant.id}/reels`),
                             </div>
                             <p style={{ color: T.text, fontSize: 13, fontWeight: 600, margin: 0 }}>{dish}</p>
                           </div>
-                          <div style={{ width: 22, height: 22, borderRadius: "50%", background: selAiDishes.includes(dish) ? GOLD : "transparent", border: `1.5px solid ${selAiDishes.includes(dish) ? GOLD : T.border}`, display: "flex", alignItems: "center", justifyContent: "center", color: "#1C1408", transition: "all .15s" }}>
+                          <div style={{ width: 22, height: 22, borderRadius: "50%", background: selAiDishes.includes(dish) ? LEAF_MAIN : "transparent", border: `1.5px solid ${selAiDishes.includes(dish) ? LEAF_MAIN : T.border}`, display: "flex", alignItems: "center", justifyContent: "center", color: "#1C1408", transition: "all .15s" }}>
                             {selAiDishes.includes(dish) ? <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> : null}
                           </div>
                         </div>
